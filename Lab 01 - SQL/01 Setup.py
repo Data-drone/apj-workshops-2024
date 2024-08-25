@@ -71,7 +71,7 @@ sample_datasets = [
 
 for sample_data in sample_datasets:
     dbutils.fs.rm(f"{datasets_location}/SQL_Lab/{sample_data}.csv.gz")
-    response = requests.get(f'https://github.com/Data-drone/apj-workshops-2024/blob/e02468bf183113c9dfdef740d6283f19a202c7d6/Datasets/SQL%20Lab/{sample_data}.csv.gz')
+    response = requests.get(f'https://github.com/Data-drone/apj-workshops-2024/raw/e02468bf183113c9dfdef740d6283f19a202c7d6/Datasets/SQL%20Lab/{sample_data}.csv.gz')
     response.raise_for_status()
     file_path = f'{datasets_location}/SQL_Lab/{sample_data}.csv.gz'
 
