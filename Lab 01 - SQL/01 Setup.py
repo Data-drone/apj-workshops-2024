@@ -4,9 +4,12 @@ import os
 current_user_id = (
     dbutils.notebook.entry_point.getDbutils().notebook().getContext().userName().get()
 )
-datasets_location = f"/FileStore/tmp/{current_user_id}/datasets/"
-catalog = "workshop"
+#datasets_location = f"/FileStore/tmp/{current_user_id}/datasets/"
+
+catalog = "workspace"
 database_name = current_user_id.split("@")[0].replace(".", "_")
+datasets_location = f'/Volumes/{catalog}/{database_name}/datasets'
+
 
 # Create catalog (instructor only)
 # spark.sql(f"CREATE CATALOG IF NOT EXISTS {catalog};")
@@ -18,9 +21,13 @@ spark.sql(f"USE CATALOG {catalog};")
 spark.sql(f"CREATE DATABASE IF NOT EXISTS {database_name};")
 spark.sql(f"USE {database_name}")
 
+# Create Volume
+spark.sql(f"CREATE VOLUME IF NOT EXISTS {catalog}.{database_name}.datasets")
+
 # COMMAND ----------
 
 import os
+import requests
 
 
 def replace_in_files(directory, old_word, new_word):
@@ -48,6 +55,10 @@ replace_in_files(directory_path, "email_address", current_user_id)
 
 working_dir = "/".join(os.getcwd().split("/")[0:5])
 git_datasets_location = f"{working_dir}/Datasets/SQL Lab"
+git_permalinks = 'https://github.com/Data-drone/apj-workshops-2024/blob/e02468bf183113c9dfdef740d6283f19a202c7d6/Datasets/SQL%20Lab/'
+
+
+dbutils.fs.mkdirs(f'{datasets_location}/SQL_Lab/')
 
 sample_datasets = [
     "dim_customer",
@@ -56,12 +67,17 @@ sample_datasets = [
     "fact_apj_sale_items",
     "fact_apj_sales",
 ]
+
+
 for sample_data in sample_datasets:
     dbutils.fs.rm(f"{datasets_location}/SQL_Lab/{sample_data}.csv.gz")
-    dbutils.fs.cp(
-        f"file:{git_datasets_location}/{sample_data}.csv.gz",
-        f"{datasets_location}/SQL_Lab/{sample_data}.csv.gz",
-    )
+    response = requests.get(f'https://github.com/Data-drone/apj-workshops-2024/blob/e02468bf183113c9dfdef740d6283f19a202c7d6/Datasets/SQL%20Lab/{sample_data}.csv.gz')
+    response.raise_for_status()
+    file_path = f'{datasets_location}/SQL_Lab/{sample_data}.csv.gz'
+
+    # Write the content of the response to a file
+    with open(file_path, 'wb') as file:
+        file.write(response.content)
 
 # COMMAND ----------
 
