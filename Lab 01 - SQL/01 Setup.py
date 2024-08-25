@@ -98,156 +98,75 @@ print(f"Use this catalog.database name through out the lab: {catalog}.{database_
 
 table_name = "dim_customer"
 sample_file = f"{table_name}.csv.gz"
-spark.conf.set("sampledata.path", f"dbfs:{datasets_location}SQL_Lab/{sample_file}")
-spark.conf.set("table.name", table_name)
+file_path = f'{datasets_location}/SQL_Lab/{table_name}.csv.gz'
+#spark.conf.set("sampledata.path", f"dbfs:{datasets_location}SQL_Lab/{sample_file}")
+#spark.conf.set("table.name", table_name)
+spark.sql(f"DROP TABLE IF EXISTS `{table_name}`")
 
-# COMMAND ----------
+df = spark.read.option("header", "true") \
+    .option("compression", "gzip") \
+    .csv(file_path)
 
-# MAGIC %sql
-# MAGIC DROP TABLE IF EXISTS `${table.name}`;
-# MAGIC CREATE TABLE IF NOT EXISTS `${table.name}`;
-# MAGIC
-# MAGIC COPY INTO `${table.name}`
-# MAGIC FROM
-# MAGIC   (
-# MAGIC     SELECT
-# MAGIC       *
-# MAGIC     FROM
-# MAGIC       '${sampledata.path}'
-# MAGIC   ) FILEFORMAT = CSV FORMAT_OPTIONS (
-# MAGIC     'mergeSchema' = 'true',
-# MAGIC     'delimiter' = ',',
-# MAGIC     'header' = 'true',
-# MAGIC     'quote' = "'"
-# MAGIC   ) COPY_OPTIONS ('mergeSchema' = 'true');
-# MAGIC SELECT
-# MAGIC   *
-# MAGIC FROM
-# MAGIC   `${table.name}`;
+df.write.saveAsTable(f'{catalog}.{database_name}.{table_name}')
+
 
 # COMMAND ----------
 
 table_name = "dim_locations"
 sample_file = f"{table_name}.csv.gz"
-spark.conf.set("sampledata.path", f"dbfs:{datasets_location}SQL_Lab/{sample_file}")
-spark.conf.set("table.name", table_name)
+file_path = f'{datasets_location}/SQL_Lab/{table_name}.csv.gz'
 
-# COMMAND ----------
+spark.sql(f"DROP TABLE IF EXISTS `{table_name}`")
 
-# MAGIC %sql
-# MAGIC DROP TABLE IF EXISTS `${table.name}`;
-# MAGIC CREATE TABLE IF NOT EXISTS `${table.name}`;
-# MAGIC
-# MAGIC COPY INTO `${table.name}`
-# MAGIC FROM
-# MAGIC   (
-# MAGIC     SELECT
-# MAGIC       *
-# MAGIC     FROM
-# MAGIC       '${sampledata.path}'
-# MAGIC   ) FILEFORMAT = CSV FORMAT_OPTIONS (
-# MAGIC     'mergeSchema' = 'true',
-# MAGIC     'delimiter' = ',',
-# MAGIC     'header' = 'true',
-# MAGIC     'quote' = "'"
-# MAGIC   ) COPY_OPTIONS ('mergeSchema' = 'true');
-# MAGIC SELECT
-# MAGIC   *
-# MAGIC FROM
-# MAGIC   `${table.name}`;
+df = spark.read.option("header", "true") \
+    .option("compression", "gzip") \
+    .csv(file_path)
+
+df.write.saveAsTable(f'{catalog}.{database_name}.{table_name}')
+
 
 # COMMAND ----------
 
 table_name = "dim_products"
 sample_file = f"{table_name}.csv.gz"
-spark.conf.set("sampledata.path", f"dbfs:{datasets_location}SQL_Lab/{sample_file}")
-spark.conf.set("table.name", table_name)
+file_path = f'{datasets_location}/SQL_Lab/{table_name}.csv.gz'
 
-# COMMAND ----------
+spark.sql(f"DROP TABLE IF EXISTS `{table_name}`")
 
-# MAGIC %sql
-# MAGIC DROP TABLE IF EXISTS `${table.name}`;
-# MAGIC CREATE TABLE IF NOT EXISTS `${table.name}`;
-# MAGIC
-# MAGIC COPY INTO `${table.name}`
-# MAGIC FROM
-# MAGIC   (
-# MAGIC     SELECT
-# MAGIC       *
-# MAGIC     FROM
-# MAGIC       '${sampledata.path}'
-# MAGIC   ) FILEFORMAT = CSV FORMAT_OPTIONS (
-# MAGIC     'mergeSchema' = 'true',
-# MAGIC     'delimiter' = ',',
-# MAGIC     'header' = 'true',
-# MAGIC     'quote' = "'"
-# MAGIC   ) COPY_OPTIONS ('mergeSchema' = 'true');
-# MAGIC SELECT
-# MAGIC   *
-# MAGIC FROM
-# MAGIC   `${table.name}`;
+df = spark.read.option("header", "true") \
+    .option("compression", "gzip") \
+    .csv(file_path)
+
+df.write.saveAsTable(f'{catalog}.{database_name}.{table_name}')
+
 
 # COMMAND ----------
 
 table_name = "fact_apj_sales"
 sample_file = f"{table_name}.csv.gz"
-spark.conf.set("sampledata.path", f"dbfs:{datasets_location}SQL_Lab/{sample_file}")
-spark.conf.set("table.name", table_name)
+file_path = f'{datasets_location}/SQL_Lab/{table_name}.csv.gz'
 
-# COMMAND ----------
+spark.sql(f"DROP TABLE IF EXISTS `{table_name}`")
 
-# MAGIC %sql
-# MAGIC DROP TABLE IF EXISTS `${table.name}`;
-# MAGIC CREATE TABLE IF NOT EXISTS `${table.name}`;
-# MAGIC
-# MAGIC COPY INTO `${table.name}`
-# MAGIC FROM
-# MAGIC   (
-# MAGIC     SELECT
-# MAGIC       *
-# MAGIC     FROM
-# MAGIC       '${sampledata.path}'
-# MAGIC   ) FILEFORMAT = CSV FORMAT_OPTIONS (
-# MAGIC     'mergeSchema' = 'true',
-# MAGIC     'delimiter' = ',',
-# MAGIC     'header' = 'true',
-# MAGIC     'quote' = "'"
-# MAGIC   ) COPY_OPTIONS ('mergeSchema' = 'true');
-# MAGIC SELECT
-# MAGIC   *
-# MAGIC FROM
-# MAGIC   `${table.name}`;
+df = spark.read.option("header", "true") \
+    .option("compression", "gzip") \
+    .csv(file_path)
+
+df.write.saveAsTable(f'{catalog}.{database_name}.{table_name}')
 
 # COMMAND ----------
 
 table_name = "fact_apj_sale_items"
 sample_file = f"{table_name}.csv.gz"
-spark.conf.set("sampledata.path", f"dbfs:{datasets_location}SQL_Lab/{sample_file}")
-spark.conf.set("table.name", table_name)
+file_path = f'{datasets_location}/SQL_Lab/{table_name}.csv.gz'
 
-# COMMAND ----------
+spark.sql(f"DROP TABLE IF EXISTS `{table_name}`")
 
-# MAGIC %sql
-# MAGIC DROP TABLE IF EXISTS `${table.name}`;
-# MAGIC CREATE TABLE IF NOT EXISTS `${table.name}`;
-# MAGIC
-# MAGIC COPY INTO `${table.name}`
-# MAGIC FROM
-# MAGIC   (
-# MAGIC     SELECT
-# MAGIC       *
-# MAGIC     FROM
-# MAGIC       '${sampledata.path}'
-# MAGIC   ) FILEFORMAT = CSV FORMAT_OPTIONS (
-# MAGIC     'mergeSchema' = 'true',
-# MAGIC     'delimiter' = ',',
-# MAGIC     'header' = 'true',
-# MAGIC     'quote' = "'"
-# MAGIC   ) COPY_OPTIONS ('mergeSchema' = 'true');
-# MAGIC SELECT
-# MAGIC   *
-# MAGIC FROM
-# MAGIC   `${table.name}`;
+df = spark.read.option("header", "true") \
+    .option("compression", "gzip") \
+    .csv(file_path)
+
+df.write.saveAsTable(f'{catalog}.{database_name}.{table_name}')
 
 # COMMAND ----------
 
