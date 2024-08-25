@@ -11,7 +11,7 @@
 # COMMAND ----------
 
 # DBTITLE 1,Setup Params 
-db_catalog = 'gen_ai_catalog'
+db_catalog = 'workspace'
 db_schema = 'lab_05'
 db_table = "arxiv_parse"
 
